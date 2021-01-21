@@ -1,6 +1,6 @@
 package com.tutorials.redis.pub.PubSubDemo.controller;
 
-import com.tutorials.redis.pub.PubSubDemo.configuration.RedisMessagePublisher;
+import com.tutorials.redis.pub.PubSubDemo.configuration.MessagePubisher;
 import com.tutorials.redis.pub.PubSubDemo.configuration.RedisMessageSubscriber;
 import com.tutorials.redis.pub.PubSubDemo.model.Message;
 import com.tutorials.redis.pub.PubSubDemo.model.ServerName;
@@ -21,7 +21,7 @@ public class RedisController {
     ServerName serverName;
 
     @Autowired
-    private RedisMessagePublisher messagePublisher;
+    private MessagePubisher messagePublisher;
 
     @Autowired
     private RedisMessageSubscriber redisMessageSubscriber;

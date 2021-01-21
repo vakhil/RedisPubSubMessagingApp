@@ -4,6 +4,7 @@ import com.tutorials.redis.pub.PubSubDemo.model.ServerName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -11,21 +12,34 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Random;
 
 @Component
 public class RedisConfiguration {
+
+//    ServerName serverName;
+//
+//    @Autowired
+//    MessagePubisher messagePubisher;
 
     @Bean
     ServerName getUniqueServerName(){
         Random rm = new Random();
         ServerName serverName = new ServerName();
         serverName.setServerNo(rm.nextInt(11)+1);
+      //  this.serverName = serverName;
         return serverName;
     }
 
     @Autowired
     RedisMessageSubscriber redisMessageSubscriber;
+
+
+//    @Bean
+//    RedisConnectionFactory redisConnectionFactory(){
+//        return new JedisConnectionFactory();
+//    }
 
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
@@ -40,7 +54,7 @@ public class RedisConfiguration {
     }
 
     @Bean
-    MessageListenerAdapter messageListenerAdapter(){
+    MessageListenerAdapter messageListenerAdapte(){
         return new MessageListenerAdapter(redisMessageSubscriber,"onMessage");
     }
 
@@ -61,4 +75,5 @@ public class RedisConfiguration {
     MessagePubisher messagePubisher(){
         return new RedisMessagePublisher(redisTemplate(redisConnectionFactory),getTopic());
     }
+
 }
